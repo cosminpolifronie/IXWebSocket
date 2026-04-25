@@ -64,7 +64,6 @@ target_sources(ixwebsocket_test PRIVATE
 target_compile_definitions(ixwebsocket_test PRIVATE ${TEST_PROGRAMS_DEFINITIONS})
 target_include_directories(ixwebsocket_test PRIVATE
   ${PROJECT_SOURCE_DIR}/Catch2/single_include
-  ../third_party
 )
 target_link_libraries(ixwebsocket_test ixwebsocket)
 target_link_libraries(ixwebsocket_test spdlog)
@@ -77,7 +76,6 @@ foreach(TEST_TARGET_NAME ${TEST_TARGET_NAMES})
 
   target_include_directories(${TEST_TARGET_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/Catch2/single_include
-    ../third_party
   )
 
   target_compile_definitions(${TEST_TARGET_NAME} PRIVATE SPDLOG_COMPILED_LIB=1)
