@@ -19,12 +19,10 @@ include_directories(ws .)
 include_directories(ws ..)
 include_directories(ws ../third_party/cpp-linenoise)
 include_directories(ws ../third_party/cli11)
-include_directories(ws ../third_party/msgpack11)
 
 include(FetchContent)
 
 add_executable(ws
-  ../third_party/msgpack11/msgpack11.cpp
   ../third_party/cpp-linenoise/linenoise.cpp
   ws.cpp)
 
@@ -32,5 +30,7 @@ add_executable(ws
 target_link_libraries(ws ixwebsocket)
 
 target_link_libraries(ws spdlog)
+
+target_link_libraries(ws msgpack11)
 
 install(TARGETS ws RUNTIME DESTINATION bin)
