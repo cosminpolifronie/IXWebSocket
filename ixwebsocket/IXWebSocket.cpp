@@ -186,14 +186,23 @@ namespace ix
 
     void WebSocket::stop(uint16_t code, const std::string& reason)
     {
+        const bool isJoinable = _thread.joinable();
+
+        if(isJoinable)
+        {
+            // we need to set _stop before close()
+            // otherwise automatic reconnection might restart the connection before _stop has a chance to get set
+            // this can happen during high CPU load => _thread.join() below blocks indefinitely
+            _stop = true;
+            _sleepCondition.notify_one();
+        }
+
         close(code, reason);
 
-        if (_thread.joinable())
+        if (isJoinable)
         {
             // wait until working thread will exit
             // it will exit after close operation is finished
-            _stop = true;
-            _sleepCondition.notify_one();
             _thread.join();
             _stop = false;
         }
